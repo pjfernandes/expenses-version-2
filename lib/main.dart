@@ -1,6 +1,8 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'models/transaction.dart';
-import 'components/transaction_user.dart';
+import 'components/transaction_list.dart';
+import 'components/transaction_form.dart';
 
 main() => runApp(
       ExpensesApp(),
@@ -15,7 +17,12 @@ class ExpensesApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
     Transaction(
       id: 1,
@@ -31,11 +38,41 @@ class MyHomePage extends StatelessWidget {
     )
   ];
 
+  void _addTransaction(String title, double value) {
+    final Transaction newTransaction = Transaction(
+      id: Random().nextInt(10),
+      title: title,
+      value: value,
+      date: DateTime.now(),
+    );
+
+    setState(() {
+      _transactions.add(newTransaction);
+    });
+
+    Navigator.of(context).pop();
+  }
+
+  _openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return TransactionForm(_addTransaction);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Expenses App"),
+        actions: [
+          IconButton(
+            onPressed: () => _openTransactionFormModal(context),
+            icon: Icon(Icons.add),
+          ),
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -49,9 +86,14 @@ class MyHomePage extends StatelessWidget {
               elevation: 5,
             ),
           ),
-          TransactionUser(),
+          TransactionList(transactions: _transactions),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _openTransactionFormModal(context),
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
