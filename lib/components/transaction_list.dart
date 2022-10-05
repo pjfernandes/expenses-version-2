@@ -12,7 +12,7 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: transactions.length < 1
+      child: transactions.isEmpty
           ? Column(
               children: [
                 Image.asset("assets/images/images.jpeg"),
