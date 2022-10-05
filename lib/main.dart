@@ -16,6 +16,7 @@ class ExpensesApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         accentColor: Colors.amber,
+        fontFamily: 'Roboto',
       ),
     );
   }
@@ -85,12 +86,14 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
             width: double.infinity,
             child: Card(
-              color: Colors.blue,
+              color: Theme.of(context).secondaryHeaderColor,
               child: Text('Gráfico'),
               elevation: 5,
             ),
           ),
-          TransactionList(transactions: _transactions),
+          TransactionList(
+            transactions: _transactions,
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
