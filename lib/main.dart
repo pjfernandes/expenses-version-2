@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'models/transaction.dart';
 import 'components/transaction_list.dart';
 import 'components/transaction_form.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 main() => runApp(
       ExpensesApp(),
@@ -42,6 +43,10 @@ class _MyHomePageState extends State<MyHomePage> {
       date: DateTime.now(),
     )
   ];
+
+  List<Transaction> getChartData() {
+    return _transactions;
+  }
 
   void _addTransaction(String title, double value, DateTime date) {
     final Transaction newTransaction = Transaction(
@@ -93,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
             width: double.infinity,
             child: Card(
               color: Theme.of(context).secondaryHeaderColor,
-              child: Text('Gráfico'),
+              child: Text("Gráfico"),
               elevation: 5,
             ),
           ),
