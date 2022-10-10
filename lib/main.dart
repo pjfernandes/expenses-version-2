@@ -1,9 +1,9 @@
 import 'dart:math';
+import 'package:expenses/components/chart.dart';
 import 'package:flutter/material.dart';
 import 'models/transaction.dart';
 import 'components/transaction_list.dart';
 import 'components/transaction_form.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 main() => runApp(
       ExpensesApp(),
@@ -32,20 +32,32 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
     Transaction(
       id: 1,
-      title: 'Tênis',
-      value: 310.76,
-      date: DateTime.now(),
+      title: 'Conta Antiga',
+      value: 400.00,
+      date: DateTime.now().subtract(const Duration(days: 33)),
     ),
     Transaction(
       id: 2,
-      title: 'Conta de luz',
+      title: 'Novo Tênis de Corrida',
+      value: 310.76,
+      date: DateTime.now().subtract(const Duration(days: 3)),
+    ),
+    Transaction(
+      id: 3,
+      title: 'Conta de Luz',
       value: 211.30,
-      date: DateTime.now(),
-    )
+      date: DateTime.now().subtract(const Duration(days: 4)),
+    ),
   ];
 
-  List<Transaction> getChartData() {
-    return _transactions;
+  List<Transaction> get recentTransactions {
+    return _transactions.where((tr) {
+      return tr.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
   }
 
   void _addTransaction(String title, double value, DateTime date) {
@@ -96,11 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           Container(
             width: double.infinity,
-            child: Card(
-              color: Theme.of(context).secondaryHeaderColor,
-              child: Text("Gráfico"),
-              elevation: 5,
-            ),
+            child: Chart(recentTransactions),
           ),
           TransactionList(
             transactions: _transactions,
