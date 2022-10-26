@@ -92,27 +92,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appbar = AppBar(
+      title: Text("Expenses App"),
+      actions: [
+        IconButton(
+          onPressed: () => _openTransactionFormModal(context),
+          icon: Icon(Icons.add),
+        ),
+      ],
+    );
+    final availableHeight = MediaQuery.of(context).size.height -
+        appbar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Expenses App"),
-        actions: [
-          IconButton(
-            onPressed: () => _openTransactionFormModal(context),
-            icon: Icon(Icons.add),
-          ),
-        ],
-      ),
+      appBar: appbar,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
+            height: availableHeight * 0.4,
             width: double.infinity,
             child: Chart(recentTransactions),
           ),
-          TransactionList(
-            transactions: _transactions,
-            onRemove: _removeTransaction,
+          Container(
+            height: availableHeight * 0.6,
+            child: TransactionList(
+              transactions: _transactions,
+              onRemove: _removeTransaction,
+            ),
           ),
         ],
       ),

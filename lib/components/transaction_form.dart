@@ -75,7 +75,7 @@ class _TransactionFormState extends State<TransactionForm> {
                       : DateFormat('dd/MM/y').format(_selectedDate!).toString(),
                   style: TextStyle(color: Colors.grey),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: _showDatePicker,
                   child: Text(
                     'Select date',
