@@ -16,7 +16,7 @@ class ExpensesApp extends StatelessWidget {
       home: MyHomePage(),
       theme: ThemeData(
         primarySwatch: Colors.purple,
-        accentColor: Colors.amber,
+        accentColor: Theme.of(context).errorColor,
         fontFamily: 'Roboto',
       ),
     );
@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final appbar = AppBar(
-      title: Text("Expenses App"),
+      title: Text("Expenses"),
       actions: [
         IconButton(
           onPressed: () => _openTransactionFormModal(context),
@@ -111,12 +111,12 @@ class _MyHomePageState extends State<MyHomePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
-            height: availableHeight * 0.4,
+            height: availableHeight * 0.3,
             width: double.infinity,
             child: Chart(recentTransactions),
           ),
           Container(
-            height: availableHeight * 0.6,
+            height: availableHeight * 0.7,
             child: TransactionList(
               transactions: _transactions,
               onRemove: _removeTransaction,
